@@ -1,89 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main page</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Safe loot</title>
     <link rel="stylesheet" href="css.css">
     <link rel="icon" href="images/icon.png">
-</head>
-<body>
-    
+  </head>
+  <body>
     <div class="app">
-        <header class="app-header">
-          <div class="app-header-logo">
-            <div class="logo">
-              <span class="logo-icon">
-                <img src="images/icon.png">
-              </span>
-              <h1 class="logo-title">
-                <span>Safe</span>
-                <span>Loot</span>
-              </h1>
-            </div>
+      <header class="app-header">
+        <div class="app-header-logo">
+          <div class="logo">
+            <span class="logo-icon">
+              <img src="images/icon.png">
+            </span>
+            <h1 class="logo-title ">
+              <span>Safe</span>
+              <span>Loot</span>
+            </h1>
           </div>
-          
-  
+        </div>
+        <div class="app-header-navigation">
+          <div class="tabs">
+            <a href="#" class="active">
+              Home
+            </a>
+            <a href="account.html">
+              Settings
+            </a>
+            <a href="#">
+              
+            </a>
+            <a href="passwords.html">
+              Passwords
+            </a>
+            <a href="files.html">
+              Files
+            </a>
+            <a href="#">
+              Wallet
+            </a>
+          </div>
+        </div>
+        <div class="app-header-actions">
+          <a href="account.html" class="user-profile">
+            <span>Stoqn Babanov</span>
+            <span>
+              <img src="images/image.png" />
+            </sp  an>
+          </a >
+        </div>
+      </header>
       
-        </header>
-        <div class="app-body">
-          <div class="app-body-navigation">
-            <nav class="navigation">
-              <a href="#">
-                <i class="ph-browsers"></i>
-                <span>Dashboard</span>
-              </a>
-              <a href="#">
-                <i class="ph-check-square"></i>
-                <span>Plan</span>
-              </a>
-              <a href="#">
-                <i class="ph-swap"></i>
-                <span>Transfers</span>
-              </a>
-              <a href="#">
-                <i class="ph-file-text"></i>
-                <span>Security</span>
-              </a>
-            </nav>
-            
-          </div>
-          <div class="app-body-main-content">
-            <section class="service-section">
-              <h2>Service</h2>
-
-              <div class="tiles">
-                <article class="tile">
-                  <div class="tile-header">
-                    <i class="ph-lightning-light"></i>
-                    <h3>
-                      <span>Passwords</span>
-                      <span>All saved passwords</span>
-                    </h3>
-                  </div>
-                  <a href="passwords.html">
-                    <span>Go to service</span>
-                    
-                      <i class="ph-caret-right-bold"></i>
-                    </span>
-                  </a>
-                </article>
-                <article class="tile">
-                  <div class="tile-header">
-                    <i class="ph-fire-simple-light"></i>
-                    <h3>
-                      <span>Files</span>
-                      <span>All saved files</span>
-                    </h3>
-                  </div>
-                  <a href="files.html">
-                    <span>Go to service</span>
+      <div class="app-body">
+        <div class="app-body-navigation">
+          <nav class="navigation">
+            <a href="#">
+              <i class="ph-browsers"></i>
+              <span>Dashboard</span>
+            </a>
+            <a href="#">
+              <i class="ph-check-square"></i>
+              <span>Plan</span>
+            </a>
+            <a href="#">
+              <i class="ph-swap"></i>
+              <span>Transfers</span>
+            </a>
+            <a href="#">
+              <i class="ph-file-text"></i>
+              <span>Security</span>
+            </a>
+          </nav>
+          
+        </div>
+        <div class="app-body-main-content">
+          <section class="service-section">
+            <h2>Service</h2>
+            <div class="tiles">
+              <article class="tile">
+                <div class="tile-header">
+                  <i class="ph-lightning-light"></i>
+                  <h3>
+                    <span>Passwords</span>
+                    <span>All saved passwords</span>
+                  </h3>
+                </div>
+                <a href="passwords.html">
+                  <span>Go to service</span>
                   
-                      <i class="ph-caret-right-bold"></i>
-                    </span>
-                  </a>
-                </article>
+                    <i class="ph-caret-right-bold"></i>
+                  </span>
+                </a>
+              </article>
+              <article class="tile">
+                <div class="tile-header">
+                  <i class="ph-fire-simple-light"></i>
+                  <h3>
+                    <span>Files</span>
+                    <span>All saved files</span>
+                  </h3>
+                </div>
+                <a href="files.html">
+                  <span>Go to service</span>
+                
+                    <i class="ph-caret-right-bold"></i>
+                  </span>
+                </a>
+              </article>
                 <article class="tile">
                   <div class="tile-header">
                     <i class="ph-file-light"></i>
@@ -100,6 +126,81 @@
                   </a>
                 </article>
               </div>
+              <section class="transfer-section">
+                <div class="transfer-section-header">
+                  <h2>Latest log ins</h2>
+                  <div class="filter-options">
+                   
+                      <i class="ph-funnel"></i>
+                    </button>
+                    
+                      <i class="ph-plus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="transfers">
+                  <div class="transfer">
+                    <div class="transfer-logo">
+                     
+                    </div>
+                    <dl class="transfer-details">
+                      <div>
+                        <dt>Apple Phone.</dt>
+                        <dd>Iphone</dd>
+                      </div>
+                      <div>
+                        <dt>192.0.0.1</dt>
+                        <dd>ip address</dd>
+                      </div>
+                      <div>
+                        <dt>9 March. 23</dt>
+                        <dd>Date </dd>
+                      </div>
+                    </dl>
+                   
+                  </div>
+                  <div class="transfer">
+                    <div class="transfer-logo">
+                      
+                    </div>
+                    <dl class="transfer-details">
+                      <div>
+                        <dt>Pc.</dt>
+                        <dd>Intel</dd>
+                      </div>
+                      <div>
+                        <dt>192.0.0.1</dt>
+                        <dd>ip address</dd>
+                      </div>
+                      <div>
+                        <dt>8  March. 23</dt>
+                        <dd>Date </dd>
+                      </div>
+                    </dl>
+                   
+                  </div>
+                  <div class="transfer">
+                    <div class="transfer-logo">
+                     
+                    </div>
+                    <dl class="transfer-details">
+                      <div>
+                        <dt>Apple Phone.</dt>
+                        <dd>Iphone</dd>
+                      </div>
+                      <div>
+                        <dt>192.0.0.1</dt>
+                        <dd>ip address</dd>
+                      </div>
+                      <div>
+                        <dt>8 March. 23</dt>
+                        <dd>Date </dd>
+                      </div>
+                    </dl>
+                   
+                  </div>
+                </div>
+              </section>
           </div>
         </div>
       </div>

@@ -32,13 +32,14 @@ body {
 	 padding: 2vw 4vw 6vw;
 	 display: flex;
 	 flex-direction: column;
-	 border-radius: 2%;
+	 border-radius: 3%;
 }
  .app-header {
 	 display: grid;
 	 grid-template-columns: minmax(min-content, 175px) minmax(max-content, 1fr) minmax(max-content, 400px);
 	 column-gap: 4rem;
 	 align-items: flex-end;
+	 
 }
  @media (max-width: 1200px) {
 	 .app-header {
@@ -103,6 +104,24 @@ body {
 	 .app-body-navigation {
 		 display: none;
 	}
+}
+.tabs {
+	display: flex;
+	justify-content: space-between;
+	color: #969593;;
+	border-bottom: 1px solid #313131;
+}
+.tabs a	 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	text-decoration: none;
+	border-top: 2px solid transparent;
+	display: inline-flex;
+	transition: 0.25s ease;
+}
+.tabs a.active, .tabs a:hover, .tabs a:focus {
+	color: #fff;
+	border-color: #fff;
 }
  .footer {
 	 margin-top: auto;
@@ -182,6 +201,43 @@ body {
 	 transform: translateX(4px);
 	 color: #fff;
 }
+.user-profile {
+	display: flex;
+	align-items: center;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	color: #969593;
+	transition: 0.25s ease;	
+	text-decoration: none;
+}
+.user-profile:hover, .user-profile:focus {
+	color: #fff;
+}
+.user-profile:hover span:last-child, .user-profile:focus span:last-child {
+	box-shadow: 0 0 0 4px #1f1f1f, 0 0 0 5px #969593;
+}
+.user-profile span:first-child {
+	display: flex;
+	font-size: 1.125rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid #313131;
+	font-weight: 300;
+}
+.user-profile span:last-child {
+	transition: 0.25s ease;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin-left: 1.5rem;
+	flex-shrink: 0;
+}
+
 .tiles {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -317,7 +373,6 @@ body {
 .page-tittle-files{
 	font-size: 2.5em;
 	color: #45ffbc;
-	padding-left: 25vw;
 }
 .add-button-files{
 	
@@ -351,4 +406,132 @@ body {
 .files-board h1:hover, .files-board h1:focus {
 	transform: translateX(4px);
 	color: #fff;
+}
+.transfers {
+	display: flex;
+	flex-direction: column;
+	margin-top: 1.5rem;
+}
+.transfer {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	font-size: 0.875rem;
+}
+@media (max-width: 1000px) {
+	.transfer {
+		align-items: flex-start;
+		flex-direction: column;
+   }
+}
+.transfer + * {
+	margin-top: 2rem;
+}
+.transfer-logo {
+	background-color: #f1f1f1;
+	border-radius: 4px;
+	width: 42px;
+	height: 42px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.transfer-logo img {
+	width: 45%;
+}
+.transfer-details {
+	margin-left: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex: 1;
+}
+@media (max-width: 1000px) {
+	.transfer-details {
+		flex-wrap: wrap;
+		margin-left: 0;
+		margin-top: 1rem;
+   }
+}
+.transfer-details div {
+	width: calc(100% / 3 - 1rem);
+}
+@media (max-width: 1000px) {
+	.transfer-details div {
+		width: 100%;
+   }
+}
+.transfer-details div + div {
+	margin-left: 1rem;
+}
+@media (max-width: 1000px) {
+	.transfer-details div + div {
+		margin-left: 0;
+		margin-top: 1rem;
+   }
+}
+.transfer-details dd {
+	color: #969593;
+	margin-top: 2px;
+}
+.transfer-number {
+	margin-left: 2rem;
+	font-size: 1.125rem;
+	flex-shrink: 0;
+	width: 15%;
+	display: flex;
+	justify-content: flex-end;
+}
+@media (max-width: 1000px) {
+	.transfer-number {
+		margin-left: 0;
+		margin-top: 1.25rem;
+		width: 100%;
+		justify-content: flex-start;
+   }
+}
+.transfer-section {
+	margin-top: 2.5rem;
+}
+.transfer-section-header {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid #313131;
+}
+.transfer-section-header h2 {
+	font-size: 1.5rem;
+}
+
+
+/* scrollbar*/
+*::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #1f1f1f;
+    border-radius: 7px;	
+  }
+
+.delete-button{
+	border: 2px solid #1A1A1A;
+	border-radius: 15px;
+	box-sizing: border-box;
+	color: #000;
+	font-size: 15px;
+	padding: 16px 24px;
+	text-align: center;
+	background-color: #ff0000;
+	transition: 0.25s ease;
+	
+}
+.delete-button:hover{
+	transform: translateY(-5px);
+	color: #fffbfb;
 }

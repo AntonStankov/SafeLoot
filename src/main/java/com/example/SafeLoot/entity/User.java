@@ -61,5 +61,9 @@ public class User {
     private List<PasswordStorage> passwords = new ArrayList<>();
 
 
+    private Boolean mfaEnabled;
+    private String secret;
+
+
 
 }

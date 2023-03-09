@@ -358,7 +358,7 @@ body {
 	border: 2px solid #1A1A1A;
 	border-radius: 15px;
 	box-sizing: border-box;
-	color: #000;
+	color: #4b4b4b;
 	font-size: 15px;
 	padding: 16px 24px;
 	text-align: center;
@@ -367,19 +367,20 @@ body {
 	
 }
 .add-button:hover{
-	transform: translateY(-5px);
-	color: #fffbfb;
+	background-color: #e8f7c8;
+	transform: translateY(-10px);
+	color: #000000;
 }
 .page-tittle-files{
 	font-size: 2.5em;
 	color: #45ffbc;
 }
 .add-button-files{
-	
+		
 	border: 2px solid #1A1A1A;
 	border-radius: 15px;
 	box-sizing: border-box;
-	color: #000;
+	color: #868686;
 	font-size: 15px;
 	padding: 16px 24px;
 	text-align: center;
@@ -388,8 +389,9 @@ body {
 	
 }
 .add-button-files:hover{
-	transform: translateY(-5px);
-	color: #fffbfb;
+	transform: translateY(-10px);
+	color: #000000;
+	background-color: #9bf9d6;
 }
 .files-board{
 	margin-top: 8%;

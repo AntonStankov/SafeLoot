@@ -33,6 +33,9 @@ public class LoginController {
     @Autowired
     private CustomUserDetailsService detailsService;
 
+    public Integer pin = 0;
+    public String email = null;
+
     @PostMapping("/login")
     public LoginResponse login(@RequestBody User user) throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -41,15 +44,29 @@ public class LoginController {
         if(newUser.getIsBanned() == Boolean.TRUE) throw new Exception("Your account has been banned!");
         System.out.println(newUser);
         if (newUser.getEmail().equals(user.getEmail()) && passwordEncoder.matches(user.getPassword(), newUser.getPassword())) {
-            String token = jwtTokenService.generateToken(user.getEmail());
-            String email = jwtTokenService.getEmailFromToken(token);
-            System.out.println(email);
-//            jwtTokenService.validateToken(token);
-            newUser.setLastLogin(LocalDateTime.now());
-            userRepository.save(newUser);
-            return new LoginResponse("Login successful", token);
+            email = user.getEmail();
+            userService.generateOtp(newUser);
+            return new LoginResponse("Location", "login-2fa");
         } else {
             return new LoginResponse("Login failed", null);
         }
     }
+
+    @PostMapping("/login-2fa")
+    public LoginResponse TwoFA(@RequestBody User user) throws Exception {
+        User newUser = userService.findByEmail(email);
+        if(newUser.getOtp() == user.getOtp()){
+            String token = jwtTokenService.generateToken(newUser.getEmail());
+//            jwtTokenService.validateToken(token);
+            newUser.setLastLogin(LocalDateTime.now());
+            newUser.setOtp(0);
+            userRepository.save(newUser);
+            return new LoginResponse("Login successful", token);
+        }
+        else throw new Exception("Invalid otp");
+    }
+
+
+
+
 }

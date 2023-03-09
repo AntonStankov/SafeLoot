@@ -43,7 +43,7 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
-        return (web) -> web.ignoring().requestMatchers("/user/signup", "/user/login", "/role/save");
+        return (web) -> web.ignoring().requestMatchers("/user/signup", "/user/login", "/role/save", "/user/login-2fa");
     }
 
 }

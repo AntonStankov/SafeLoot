@@ -30,6 +30,7 @@ public class SignUpController {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         user.setIsBanned(Boolean.FALSE);
+        user.setOtp(0);
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepo.findByRoleName(Roles.USER).get(0));
         user.setRoles(roles);

@@ -3,7 +3,7 @@ body {
 	 line-height: 1.5;
 	 min-height: 100vh;
 	 font-family: "Be Vietnam Pro", sans-serif;
-	 background-color: #313131;
+	 background-color: #000000;
 	 color: #fff;
 	 display: flex;
 	 padding-top: 3vw;
@@ -32,7 +32,7 @@ body {
 	 padding: 2vw 4vw 6vw;
 	 display: flex;
 	 flex-direction: column;
-	 border-radius: 3%;
+	 border-radius: 2%;
 }
  .app-header {
 	 display: grid;
@@ -273,4 +273,82 @@ body {
 	font-size: 0.825em;
 	font-weight: 200;
 }
- 
+.page-tittle{
+	font-size: 2.5em;
+	color: #e6fcb6;
+	padding-left: 20vw;
+}
+.password-board{
+	margin-top: 8%;
+	text-decoration: none;
+	transition: 0.25s ease; 
+	color: #bfbebc
+}
+.password-board h1{
+	font-size: 20px;
+	text-decoration: none;
+	transition: 0.25s ease;
+	border-bottom: 1px solid #313131;
+}
+.password-board h1 * {
+	transition: 0.25s ease;
+}
+.password-board h1:hover, .password-board h1:focus {
+	transform: translateX(4px);
+	color: #fff;
+}
+.add-button{
+	
+	border: 2px solid #1A1A1A;
+	border-radius: 15px;
+	box-sizing: border-box;
+	color: #000;
+	font-size: 15px;
+	padding: 16px 24px;
+	text-align: center;
+	background-color: #e3ffa8;
+	transition: 0.25s ease;
+	
+}
+.add-button:hover{
+	transform: translateY(-5px);
+	color: #fffbfb;
+}
+.page-tittle-files{
+	font-size: 2.5em;
+	color: #45ffbc;
+	padding-left: 25vw;
+}
+.add-button-files{
+	
+	border: 2px solid #1A1A1A;
+	border-radius: 15px;
+	box-sizing: border-box;
+	color: #000;
+	font-size: 15px;
+	padding: 16px 24px;
+	text-align: center;
+	background-color: #45ffbc;
+	transition: 0.25s ease;
+	
+}
+.add-button-files:hover{
+	transform: translateY(-5px);
+	color: #fffbfb;
+}
+.files-board{
+	margin-top: 8%;
+	text-decoration: none;
+	transition: 0.25s ease; 
+	color: #bfbebc
+}
+.files-board h1{
+	font-size: 20px;
+	text-decoration: none;
+	transition: 0.25s ease;
+	border-bottom: 1px solid #313131;
+}
+.files-board h1:hover, .files-board h1:focus {
+	transform: translateX(4px);
+	color: #fff;
+}

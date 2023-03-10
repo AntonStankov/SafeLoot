@@ -23,14 +23,14 @@ public class FileStorage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String fileName;
 
-    @Column
+    @Column(nullable = false)
     private String fileType;
 
 //    @Lob
-    @Column(columnDefinition="text")
+    @Column(columnDefinition="text", nullable = false)
     private byte[] file_content;
 
     @Column

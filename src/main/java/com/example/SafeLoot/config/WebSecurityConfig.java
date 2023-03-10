@@ -1,5 +1,6 @@
 package com.example.SafeLoot.config;
 
+//import com.example.SafeLoot.jwt.JwtRequestFilter;
 import com.example.SafeLoot.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 
@@ -34,12 +37,23 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
+//        http.cors().disable();
         http.authorizeRequests()
-                .requestMatchers("/user/**", "/role/**", "/file/**", "/passStorage/**").authenticated()
+                .requestMatchers("/user/**", "/role/**", "/file/**", "/passStorage/**", "/passStorage/generatePass").authenticated()
                 .anyRequest().permitAll();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurerAdapter() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+//            }
+//        };
+//    }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){

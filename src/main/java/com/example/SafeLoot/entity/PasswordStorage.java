@@ -21,12 +21,12 @@ public class PasswordStorage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String passwordName;
-    @Column
+    @Column(nullable = false)
     private String passwordEncr;
 
-    @Column
+    @Column(nullable = false)
     private URL url;
 
     @JsonIgnore

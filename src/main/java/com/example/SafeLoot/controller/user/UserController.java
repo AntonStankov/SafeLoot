@@ -87,4 +87,15 @@ public class UserController {
         else throw new Exception("You are not able to give someone permissions!");
 
     }
+
+
+    @GetMapping("/userContext")
+    public String getUserFromContext() throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        User userContext =  userService.findByEmail(principal.getUsername());
+
+        String username = userContext.getFirstName() + " " + userContext.getLastName();
+        return username;
+    }
 }

@@ -6,9 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Safe loot</title>
     <link rel="stylesheet" href="css.css">
+    <script src="../script.js"></script>
     <link rel="icon" type="image/x-icon" href="images/icon.ico" />
   </head>
-  <body>
+  <body onload="getUser()">
     <div class="app">
       <header class="app-header">
         <div class="app-header-logo">
@@ -46,7 +47,7 @@
         </div>
         <div class="app-header-actions">
           <a href="account.html" class="user-profile">
-            <span>Stoqn Babanov</span>
+            <span id = "user"></span>
             <span>
               <img src="images/image.png" />
             </sp  an>

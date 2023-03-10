@@ -38,10 +38,10 @@ public class User {
     @Column(name = "last_name", nullable = false, length = 20)
     private String lastName;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String location;
 
     @Column

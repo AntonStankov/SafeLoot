@@ -92,7 +92,7 @@ public class PasswordServiceImpl implements PasswordService{
             int randomIndex = random.nextInt(PASSWORD_ALLOW_BASE.length());
             password.append(PASSWORD_ALLOW_BASE.charAt(randomIndex));
         }
-        return encryptPassword(password.toString());
+        return password.toString();
     }
 
     @Override

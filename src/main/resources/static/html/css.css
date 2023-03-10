@@ -105,6 +105,54 @@ body {
 		 display: none;
 	}
 }
+.app-body-main-content input{
+	display: block;
+	padding: 13px 20px;
+	margin: 5px;
+	padding-left: 55px;
+	height: 48px;
+	width: 100%;
+	font-weight: 500;
+	border-radius: 10px;
+	font-size: 14px;
+	line-height: 22px;
+	letter-spacing: 0.5px;
+	outline: none;
+	color: #c4c3ca;
+	background-color: transparent;
+	border: none;
+	-webkit-transition: all 200ms linear;
+	transition: all 200ms linear;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.app-body-main-content input:hover{
+	transform: translateY(-4px);
+	background-color: #1A1A1A;
+	border-radius: 1px;
+}
+
+.send{
+	font-size: 23px;
+	padding: 3%;
+	border-radius: 10px;
+	background-color: #e3ffa8;
+	border: none;
+	-webkit-transition: all 200ms linear;
+	transition: all 200ms linear;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	color: #000000;
+}
+.send:hover{
+	background-color: rgb(17, 17, 17);
+	font-size:22px;
+}
+.donthave{
+	margin-left:10px ;
+	color: #e3ffa8;	
+}
+.jol{
+	color: #e3ffa8;
+}
 .tabs {
 	display: flex;
 	justify-content: space-between;

@@ -49,7 +49,7 @@ function login(){
             email: _email,
             password: _password,
 
-            isActive: false //default
+            isActive: true //default
         }),
         headers: new Headers({'content-type': 'application/json',
                             'authorization': 'Bearer ',
@@ -66,3 +66,5 @@ function login(){
 }
 })
 }
+
+sessionStorage.setItem("token", data['token'])

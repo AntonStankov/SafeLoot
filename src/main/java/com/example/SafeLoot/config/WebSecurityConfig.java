@@ -35,7 +35,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .requestMatchers("/user/**", "/role/**", "/file/**").authenticated()
+                .requestMatchers("/user/**", "/role/**", "/file/**", "/passStorage/**").authenticated()
                 .anyRequest().permitAll();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

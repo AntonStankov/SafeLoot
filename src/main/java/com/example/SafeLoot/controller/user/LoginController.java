@@ -4,6 +4,7 @@ package com.example.SafeLoot.controller.user;
 
 import com.example.SafeLoot.entity.User;
 import com.example.SafeLoot.jwt.JwtTokenService;
+import com.example.SafeLoot.service.EmailService;
 import com.example.SafeLoot.service.UserRepository;
 import com.example.SafeLoot.service.UserService;
 import com.example.SafeLoot.userDetails.CustomUserDetailsService;
@@ -33,6 +34,9 @@ public class LoginController {
     @Autowired
     private CustomUserDetailsService detailsService;
 
+    @Autowired
+    private EmailService emailService;
+
     public Integer pin = 0;
     public String email = null;
 
@@ -45,7 +49,7 @@ public class LoginController {
         System.out.println(newUser);
         if (newUser.getEmail().equals(user.getEmail()) && passwordEncoder.matches(user.getPassword(), newUser.getPassword())) {
             email = user.getEmail();
-            userService.generateOtp(newUser);
+            emailService.generateOtp(newUser);
             return new LoginResponse("Location", "login-2fa");
         } else {
             return new LoginResponse("Login failed", null);

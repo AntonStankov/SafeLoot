@@ -11,11 +11,15 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+//import javax.mail.Message;
+//import javax.mail.Session;
+//import javax.mail.Transport;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.internet.MimeMessage;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -26,8 +30,6 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
-
-
 
 
 
@@ -45,32 +47,74 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+
     @Override
-    public String generateOtp(User user){
-        try {
-            int randoPin = (int) (Math.random() * 9000) + 1000;
-            user.setOtp(randoPin);
-            userRepository.save(user);
+    public boolean checkPassword(String password) throws IOException {
 
 
+        BufferedReader reader = new BufferedReader(new FileReader("rockyou1"));
+        BufferedReader reader2 = new BufferedReader(new FileReader("rockyou2"));
+        BufferedReader reader3 = new BufferedReader(new FileReader("common_passwords"));
+        BufferedReader reader4 = new BufferedReader(new FileReader("top_200_passwords"));
 
+        String line;
 
-//            Properties properties=new Properties();
-////fill all the information like host name etc.
-//            Session session=Session.getInstance(properties,null);
-//            MimeMessage message=new MimeMessage(session);
-//            message.setFrom(new InternetAddress("antonstankov007@gmail.com"));
-//            message.addRecipient(Message.RecipientType.TO,
-//                    new InternetAddress(user.getEmail()));
-////            message.setHeader();
-//            message.setText("Hi, This mail is to inform you..." + randoPin);
-//            Transport.send(message);
-
-            return "success";
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return "error";
+        //file 1
+        while ((line = reader.readLine()) != null) {
+            if (password.equals(line)) {
+                reader.close();
+                return false;
+            }
         }
+        //file 2
+        while ((line = reader2.readLine()) != null) {
+            if (password.equals(line)) {
+                reader.close();
+                return false;
+            }
+        }
+        //file 3
+        while ((line = reader3.readLine()) != null) {
+            if (password.equals(line)) {
+                reader.close();
+                return false;
+            }
+        }
+        //file 4
+        while ((line = reader4.readLine()) != null) {
+            if (password.equals(line)) {
+                reader.close();
+                return false;
+            }
+        }
+
+        reader.close();
+        return true;
     }
+
+
+
+    @Override
+    public int checkStrength(String password) {
+        int score = 0;
+        if (password.length() >= 8) {
+            score++;
+        }
+        if (password.matches("(?=.*[a-z]).*")) {
+            score++;
+        }
+        if (password.matches("(?=.*[A-Z]).*")) {
+            score++;
+        }
+        if (password.matches("(?=.*[0-9]).*")) {
+            score++;
+        }
+        if (password.matches("(?=.*[!@#$%^&*()_+\\-={};':\"\\\\|,.<>\\/?]).*")) {
+            score++;
+        }
+        return score;
+
+    }
+
+
 }

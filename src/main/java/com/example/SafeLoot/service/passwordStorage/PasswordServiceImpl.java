@@ -17,7 +17,9 @@ import javax.crypto.spec.SecretKeySpec;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
@@ -29,6 +31,18 @@ public class PasswordServiceImpl implements PasswordService{
     private UserService userService;
 
     String secretKey = "mysecretkey12345";
+
+    private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
+    private static final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
+    private static final String NUMBER = "0123456789";
+    private static final String OTHER_CHAR = "!@#$%&*()_+-=[]?";
+    private static final String PASSWORD_ALLOW_BASE = CHAR_LOWER + CHAR_UPPER + NUMBER + OTHER_CHAR;
+
+    private static final String ALGORITHM = "AES";
+    private static final String TRANSFORMATION = "AES/ECB/PKCS5Padding";
+    private static final String ENCRYPTION_KEY = "eb283445026f14a97f3a83a4a4090f2f";
+
+    private static final SecureRandom random = new SecureRandom();
     SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "AES");
 
     @Autowired
@@ -68,22 +82,28 @@ public class PasswordServiceImpl implements PasswordService{
 
     @Override
     public String generatePassword(int length) {
-        String lowerCaseLetters = "abcdefghijklmnopqrstuvwxyz";
-        String upperCaseLetters = lowerCaseLetters.toUpperCase();
-        String numbers = "1234567890";
-        String specialSigns = "@#$%^&*&/=~";
-
-        StringBuilder password = new StringBuilder();
-        for (int i = 0; i < length; i++){
-            int random_int = (int)Math.floor(Math.random() * (4 - 1 + 1) + 1);
-            switch (random_int) {
-                case 1 -> password.append(lowerCaseLetters.charAt((int) Math.floor(Math.random() * (36 - 1 + 1) + 1)));
-                case 2 -> password.append(upperCaseLetters.charAt((int) Math.floor(Math.random() * (36 - 1 + 1) + 1)));
-                case 3 -> password.append(numbers.charAt((int) Math.floor(Math.random() * (10 - 1 + 1) + 1)));
-                case 4 -> password.append(specialSigns.charAt((int) Math.floor(Math.random() * (11 - 1 + 1) + 1)));
-            }
-            System.out.println(password.toString());
+        if (length < 1) {
+            throw new IllegalArgumentException("password length must be at least 1");
         }
-        return password.toString();
+
+        StringBuilder password = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(PASSWORD_ALLOW_BASE.length());
+            password.append(PASSWORD_ALLOW_BASE.charAt(randomIndex));
+        }
+        return encryptPassword(password.toString());
+    }
+
+    @Override
+    public String encryptPassword(String password) {
+        try {
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            Key secretKey = new SecretKeySpec(ENCRYPTION_KEY.getBytes(), ALGORITHM);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            byte[] encryptedPasswordBytes = cipher.doFinal(password.getBytes());
+            return Base64.getEncoder().encodeToString(encryptedPasswordBytes);
+        } catch (Exception e) {
+            throw new RuntimeException("Error encrypting password", e);
+        }
     }
 }

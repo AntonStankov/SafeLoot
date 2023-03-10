@@ -29,6 +29,9 @@ public class User {
     @Column(nullable = false, length = 64)
     private String password;
 
+    @Column
+    private int passwordStrength;
+
     @Column(name = "first_name", nullable = false, length = 20)
     private String firstName;
 

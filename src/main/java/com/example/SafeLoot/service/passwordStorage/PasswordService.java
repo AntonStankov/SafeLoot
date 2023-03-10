@@ -18,4 +18,6 @@ public interface PasswordService {
     String decryptPass(String password) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, MalformedURLException;
 
     String generatePassword(int length);
+
+    String encryptPassword(String password);
 }

@@ -74,12 +74,16 @@ public class PasswordServiceImpl implements PasswordService{
     }
 
     public String decryptPass(String password) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
-        byte[] decodedEncrypted = Base64.getDecoder().decode(password);
-        byte[] decrypted = cipher.doFinal(decodedEncrypted);
-        return new String(decrypted);
+
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            Key secretKey = new SecretKeySpec(ENCRYPTION_KEY.getBytes(), ALGORITHM);
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+            byte[] decryptedPasswordBytes = cipher.doFinal(Base64.getDecoder().decode(password));
+            return new String(decryptedPasswordBytes);
+
     }
+
+
 
     @Override
     public String generatePassword(int length) {

@@ -98,4 +98,7 @@ public class UserController {
         String username = userContext.getFirstName() + " " + userContext.getLastName();
         return username;
     }
+
+
+
 }

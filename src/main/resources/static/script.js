@@ -1,3 +1,7 @@
+let _idGlobal = 0;
+
+
+
 function register() {
 
 
@@ -282,7 +286,89 @@ function getUser(){
     if(response.status === 200){
         let userContext = document.getElementById("user")
         userContext.appendChild(document.createTextNode(data));
+    }
+    } )
+  }
+
+
+
+  function findMyPasses(){
+
+    
+    fetch('http://localhost:8085/passStorage/myPass', {
+        method: 'get',
+        headers: new Headers({'content-type': 'application/json',
+                            'authorization': 'Bearer ' + sessionStorage.getItem("token"),
+                        }),
+        }
+    )
+    .then( async (response) => {
+
+    // get json response here
+    let data = await response.json();
+    console.log(response.status)
+    if(response.status === 200){
+        let div = document.getElementById("board")
+        for (let i = 0; i < data.length; i++) {
+            let h1tag = document.createElement("h1");
+            let button = document.createElement("a");
+
+            
+            
+            
+            let idd = data[i]["id"];
+            console.log(idd)
+            h1tag.setAttribute("id", data[i]["id"]);
+            button.setAttribute("onclick", "sessionSave(" + idd + ")");
+            
+            button.setAttribute("href", "masterpass.html");
+            button.appendChild(document.createTextNode("Click here to see your password"));
+
+
+            
+            div.appendChild(h1tag);
+            div.appendChild(button);
+            h1tag.appendChild(document.createTextNode(data[i]["passwordName"] + ": *********   /   " + data[i]["url"]))
+        }
+
 }
 })
   }
+
+  function sessionSave(_id){
+    sessionStorage.setItem("magicnum", _id);
+  }
+
+  function showPass(_id){
+    let pass = document.getElementById("master").value;
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("token"));
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Cookie", "JSESSIONID=6CBC8861BE1965F1A02EA6CD7EC7889B");
+
+var raw = JSON.stringify({
+  "id": sessionStorage.getItem("magicnum"),
+  "userPassword": pass
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("http://localhost:8085/passStorage/decrPass", requestOptions)
+.then( async response => {
+    let data = await response.text();
+    console.log(response.status)
+    if(response.status === 200){
+        let output = document.getElementById("p");
+        output.appendChild(document.createTextNode(data));
+    }
+  })
+//   .catch(error => console.log('error', error));
+
+  }
+
 

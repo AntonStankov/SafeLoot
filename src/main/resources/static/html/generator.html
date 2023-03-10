@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Files</title>
+    <title>Generator</title>
     <link rel="stylesheet" href="css.css">
     <link rel="icon" type="image/x-icon" href="images/icon.ico" />
+    <script src="../script.js"></script>
 </head>
 <body>
     <div class="app">
@@ -16,7 +17,7 @@
                 <span class="logo-icon">
                   <img src="images/icon.png">
                 </span>
-                <h1 class="logo-title">
+                <h1 class="logo-title ">
                   <span>Safe</span>
                   <span>Loot</span>
                 </h1>
@@ -24,22 +25,22 @@
             </div>
             <div class="app-header-navigation">
               <div class="tabs">
-                <a href="index.html" >
+                <a href="index.html">
                   Home
                 </a>
-                <a href="account.html">
+                <a href="account.html" >
                   Settings
                 </a>
                 <a href="#">
-                  
+                    
                 </a>
                 <a href="passwords.html">
                   Passwords
                 </a>
-                <a href="files.html" class="active">
+                <a href="files.html">
                   Files
                 </a>
-                <a href="generator.html">
+                <a href="generator.html"class="active">
                   Generator
                 </a>
               </div>
@@ -49,12 +50,11 @@
                 <span>Stoqn Babanov</span>
                 <span>
                   <img src="images/image.png" />
-                </span>
+                </sp  an>
               </a >
             </div>
-                
           </header>
-          <div class="app-body">
+        <div class="app-body">
             <div class="app-body-navigation">
               <nav class="navigation">
                 <a href="aboutus.html" target="_blank">
@@ -70,29 +70,15 @@
                   <span>Privacy & Policy</span>
                 </a>
               </nav>
+              </div>
+             <div class="app-body-main-content">
+                    <input type="number" placeholder="Length of password"  id="len">
+                    <button onclick="generateAndDisplayPassword()" class="add-button-generate"> Generate</button>
+                    <h1 id="passwordOutput"></h1>
+             </div>
               
-            </div>
-            <div class="app-body-main-content"> 
-                <div class="files-board">
-                    <h1>VajenDocument.dox</h1>
-                    <h1>Website.html</h1>
-                    <h1>1zad.c</h1>   
-                    <h1>VajenDocument.dox</h1>
-                    <h1>Website.html</h1>
-                    <h1>1zad.c</h1>   
-                    <h1>VajenDocument.dox</h1>
-                    <h1>Website.html</h1>
-                    <h1>1zad.c</h1>   
-                </div>
-            </div>
-            <div class="secondary-content">
-              <br/><br/>
-              <input type="text" placeholder="Tittle">
-              <input type="file" placeholder="file">
-                 <a class="add-button-files"> Add </a>
-            </div>
-          </div> 
-
+              </div>   
+        </div>
     </div>
 </body>
 </html>

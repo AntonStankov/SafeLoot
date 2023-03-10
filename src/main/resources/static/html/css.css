@@ -465,6 +465,24 @@ body {
 	color: #000000;
 	background-color: #9bf9d6;
 }
+.add-button-generate{
+	position: absolute;	
+	width: 605px;
+	border: 2px solid #1A1A1A;
+	border-radius: 15px;
+	box-sizing: border-box;
+	color: #555555;
+	font-size: 15px;
+	padding: 16px 24px;
+	text-align: center;
+	background-color: #bdbbb7;
+	transition: 0.25s ease;
+}
+.add-button-generate:hover{
+	transform: translateY(-3px);
+	color: #000000;
+	background-color: #bdbbb7;
+}
 .files-board{
 	margin-top: 8%;
 	text-decoration: none;
@@ -609,4 +627,43 @@ body {
 	transform: translateY(-5px);
 	color: #fffbfb;
 }
-
+#snackbar {
+	visibility: hidden; 
+	min-width: 250px; 
+	margin-left: -125px; 
+	background-color: #333; 
+	color: #fff; 
+	text-align: center; 
+	border-radius: 2px; 
+	padding: 16px; 
+	position: fixed; 
+	z-index: 1; 
+	left: 50%;
+	bottom: 30px; 
+  }
+  
+#snackbar.show {
+	visibility: visible;
+	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  @-webkit-keyframes fadein {
+	from {bottom: 0; opacity: 0;}
+	to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+	from {bottom: 0; opacity: 0;}
+	to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+	from {bottom: 30px; opacity: 1;}
+	to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+	from {bottom: 30px; opacity: 1;}
+	to {bottom: 0; opacity: 0;}
+  }
+  

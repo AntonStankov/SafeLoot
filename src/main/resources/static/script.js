@@ -37,3 +37,32 @@ function register() {
 }
 })
 }
+
+
+function login(){
+    let _email = document.getElementById("email").value
+    let _password = document.getElementById("password").value
+
+    fetch('http://localhost:8085/user/login', {
+        method: 'post',
+        body: JSON.stringify({
+            email: _email,
+            password: _password,
+
+            isActive: false //default
+        }),
+        headers: new Headers({'content-type': 'application/json',
+                            'authorization': 'Bearer ',
+                        }),
+        }
+    )
+    .then( async (response) => {
+
+    // get json response here
+    let data = await response.json();
+    console.log(response.status)
+    if(response.status === 200){
+        location.href = '2fa.html';
+}
+})
+}

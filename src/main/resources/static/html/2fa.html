@@ -7,6 +7,7 @@
     <title>Authentication</title>
     <link rel="stylesheet" href="css.css">
     <link rel="icon" type="image/x-icon" href="images/icon.ico" />
+    <script src="../script.js"></script>
 </head>
 <body>
     <div class="app" style="width : 50% ">
@@ -32,7 +33,8 @@
             <div class="app-body-main-content">
                 <p class="auth-txt">Protecting your tickets is our top priority.<br/>    Please confirm your account by entering the authorization code sent to your email.
                 </p>
-                <input placeholder="2FA" type="text">
+                <input id="auth"placeholder="2FA" type="text">
+                <button onclick="authenticate()">Enter</button>
                 </div>
               </div>
         </div>

@@ -67,4 +67,34 @@ function login(){
 })
 }
 
-sessionStorage.setItem("token", data['token'])
+
+function authenticate(){
+
+    let _auth = document.getElementById("auth").value
+
+    fetch('http://localhost:8085/user/login-2fa', {
+        method: 'post',
+        body: JSON.stringify({
+            otp: _auth,
+
+            isActive: true //default
+        }),
+        headers: new Headers({'content-type': 'application/json',
+                            'authorization': 'Bearer ',
+                        }),
+        }
+    )
+    .then( async (response) => {
+
+    // get json response here
+    let data = await response.json();
+    console.log(response.status)
+    if(response.status === 200){
+        location.href = 'index.html';
+        sessionStorage.setItem("token", data['token'])
+}
+})
+
+    
+
+}

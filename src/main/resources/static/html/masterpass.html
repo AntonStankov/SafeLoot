@@ -1,12 +1,39 @@
 <html>
     <head>
         <script src="../script.js"></script>
-        <title></title>
+        <title>Enter MPass</title>
+        <link rel="stylesheet" href="css.css">
+        <link rel="icon" href="images/icon.ico">
     </head>
 
     <body>
-        <input type="password" placeholder="master password" id="master">
-        <button onclick="showPass()">Submit</button>
+        <div class="app" style="width : 40%; height: 10%;">
+            <header class="app-header">
+                <div class="app-header-logo">
+                  <div class="logo">
+                    <span class="logo-icon">
+                      <img src="images/icon.png">
+                    </span>
+                    <h1 class="logo-title">
+                      <span>Safe</span>
+                      <span>Loot</span>
+                    </h1>
+    
+                  </div>
+                </div>
+                <h1 class="jol">Write your master password</h1> 
+            </header>
+            <div class="app-body">
+                <nav class="navigation">
+
+                </nav>
+                <div class="app-body-main-content">
+        <input type="password" placeholder="enter master password" id="master" style="font-size: large;">
+        <button class="send" style="width: 300px;" onclick="showPass()">Submit</button>
         <p id="p"></p>
+
+            </div>
+         </div>
+        </div>
     </body>
 </html>

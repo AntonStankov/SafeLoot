@@ -123,7 +123,7 @@ body {
 	border: none;
 	-webkit-transition: all 200ms linear;
 	transition: all 200ms linear;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2	);
 }
 .app-body-main-content input:hover{
 	transform: translateY(-4px);
@@ -666,4 +666,8 @@ body {
 	from {bottom: 30px; opacity: 1;}
 	to {bottom: 0; opacity: 0;}
   }
-  
+#p{
+	margin-top: 55px;
+	font-size: 25px;
+	color: #e3ffa8;
+}

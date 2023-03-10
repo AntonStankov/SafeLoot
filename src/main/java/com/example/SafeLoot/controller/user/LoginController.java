@@ -50,6 +50,7 @@ public class LoginController {
         if (newUser.getEmail().equals(user.getEmail()) && passwordEncoder.matches(user.getPassword(), newUser.getPassword())) {
             email = user.getEmail();
             emailService.generateOtp(newUser);
+            newUser.setPasswordStrength(0);
             return new LoginResponse("Location", "login-2fa");
         } else {
             return new LoginResponse("Login failed", null);

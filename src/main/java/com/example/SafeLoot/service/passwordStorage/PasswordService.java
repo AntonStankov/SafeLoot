@@ -10,6 +10,7 @@ import javax.crypto.NoSuchPaddingException;
 import java.net.MalformedURLException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @Service
 public interface PasswordService {
@@ -20,4 +21,6 @@ public interface PasswordService {
     String generatePassword(int length);
 
     String encryptPassword(String password);
+
+
 }

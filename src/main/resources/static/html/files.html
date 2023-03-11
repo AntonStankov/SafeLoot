@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="css.css">
     <script src="../script.js"></script>
     <link rel="icon" type="image/x-icon" href="images/icon.ico" />
+    
 </head>
-<body onload="getUser()">
+<body onload="getUser(), displayFiles()">
     <div class="app">
         <header class="app-header">
             <div class="app-header-logo">
@@ -74,8 +75,8 @@
               
             </div>
             <div class="app-body-main-content"> 
-                <div class="files-board">
-                    <h1>VajenDocument.dox</h1>
+                <div class="files-board" id="files-board">
+                    <!-- <h1>VajenDocument.dox</h1>
                     <h1>Website.html</h1>
                     <h1>1zad.c</h1>   
                     <h1>VajenDocument.dox</h1>
@@ -83,17 +84,18 @@
                     <h1>1zad.c</h1>   
                     <h1>VajenDocument.dox</h1>
                     <h1>Website.html</h1>
-                    <h1>1zad.c</h1>   
+                    <h1>1zad.c</h1>    -->
                 </div>
             </div>
             <div class="secondary-content">
               <br/><br/>
-              <input type="text" placeholder="Tittle">
-              <input type="file" placeholder="file">
-                 <a class="add-button-files"> Add </a>
+              <input type="text" placeholder="Tittle" id="fileName">
+              <input type="file" placeholder="file" id="file">
+                 <a class="add-button-files" onclick="saveFile()"> Add </a>
             </div>
           </div> 
 
     </div>
+    <div id="snackbar">File saved.</div>
 </body>
 </html>

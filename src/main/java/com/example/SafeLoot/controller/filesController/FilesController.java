@@ -9,6 +9,7 @@ import com.example.SafeLoot.entity.User;
 import com.example.SafeLoot.service.UserService;
 import com.example.SafeLoot.service.fileService.FileRepo;
 import com.example.SafeLoot.service.fileService.FileService;
+import jakarta.xml.bind.DatatypeConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
@@ -16,8 +17,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -41,13 +47,23 @@ public class FilesController {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         User userContext =  userService.findByEmail(principal.getUsername());
 
+//        byte[] fileBytes = Files.readAllBytes(file);
+
         FileStorage fileStorage = new FileStorage();
         fileStorage.setFileName(file.getOriginalFilename());
         fileStorage.setFileType(fileStorage.getFileName().substring(fileStorage.getFileName().lastIndexOf(".") + 1));
         fileStorage.setUser(userContext);
+
+//        byte[] fileBytes = file.getBytes();
+//        PGobject pgObject = new PGobject();
+//        pgObject.setType("bytea");
+//        pgObject.setValue(new String(fileBytes, StandardCharsets.ISO_8859_1));
+
         fileStorage.setFile_content(file.getBytes());
+
+
         fileStorage.setSize(file.getSize());
-        System.out.println(Arrays.toString(file.getBytes()));
+        System.out.println(file.getBytes());
 
         return fileService.saveFile(fileStorage);
         //TODO: display custom message
@@ -60,17 +76,39 @@ public class FilesController {
 
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) throws Exception {
-
-
-        // Load file into a byte array
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        UserDetails principal = (UserDetails) authentication.getPrincipal();
+//        User userContext =  userService.findByEmail(principal.getUsername());
+//
+//
+//        // Load file into a byte array
 //        byte[] fileBytes = loadFileIntoByteArray();
         FileStorage fileBytes = fileRepo.findById(id).orElseThrow(Exception::new);
+//        Boolean passed = Boolean.FALSE;
+//        for (FileStorage fileStorage : userContext.getFiles()){
+//            if (fileStorage.getFile_content() == fileBytes.getFile_content()) {
+//                passed = Boolean.TRUE;
+//                break;
+//            }
+//        }
+//        if (passed){
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentLength(fileBytes.getFile_content().length);
+            headers.setContentDisposition(ContentDisposition.attachment().filename(fileBytes.getFileName()).build());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentLength(fileBytes.getFile_content().length);
-        headers.setContentDisposition(ContentDisposition.attachment().filename(fileBytes.getFileName()).build());
+            return new ResponseEntity<>(fileBytes.getFile_content(), headers, HttpStatus.OK);
+//        }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This is not your file");
 
-        return new ResponseEntity<>(fileBytes.getFile_content(), headers, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/findMyFiles")
+    public List<FileStorage> findMyFiles() throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        User userContext =  userService.findByEmail(principal.getUsername());
+
+        return userContext.getFiles();
     }
 }

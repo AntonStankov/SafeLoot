@@ -30,7 +30,7 @@ public class FileStorage {
     private String fileType;
 
 //    @Lob
-    @Column(columnDefinition="text", nullable = false)
+    @Column(columnDefinition="bytea", nullable = false)
     private byte[] file_content;
 
     @Column

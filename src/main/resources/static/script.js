@@ -14,7 +14,7 @@ function register() {
     let _number = document.getElementById("number").value
 
 
-    fetch('http://localhost:8085/user/signup', {
+    fetch('https://localhost:8085/user/signup', {
         method: 'post',
         body: JSON.stringify({
             email: _email,
@@ -47,7 +47,7 @@ function login(){
     let _email = document.getElementById("email").value
     let _password = document.getElementById("password").value
 
-    fetch('http://localhost:8085/user/login', {
+    fetch('https://localhost:8085/user/login', {
         method: 'post',
         body: JSON.stringify({
             email: _email,
@@ -76,7 +76,7 @@ function authenticate(){
 
     let _auth = document.getElementById("auth").value
 
-    fetch('http://localhost:8085/user/login-2fa', {
+    fetch('https://localhost:8085/user/login-2fa', {
         method: 'post',
         body: JSON.stringify({
             otp: _auth,
@@ -108,7 +108,7 @@ function generateAndDisplayPassword() {
 myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("token"));
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("Cookie", "JSESSIONID=64698DE54999A39FAB6B31B611ED8758");
-myHeaders.append("Access-Control-Allow-Origin", "http://localhost:8085");
+myHeaders.append("Access-Control-Allow-Origin", "https://localhost:8085");
 myHeaders.append('Access-Control-Allow-Methods', 'POST');
 // 'Access-Control-Allow-Origin':'*',
 //                 'Access-Control-Allow-Methods':'POST'
@@ -124,7 +124,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://localhost:8085/passStorage/generatePass", requestOptions)
+fetch("https://localhost:8085/passStorage/generatePass", requestOptions)
   .then( async response => {
     let data = await response.text();
     console.log(response.status)
@@ -143,7 +143,7 @@ fetch("http://localhost:8085/passStorage/generatePass", requestOptions)
     let _url = document.getElementById("url").value
 
     var x = document.getElementById("snackbar");
-    fetch('http://localhost:8085/passStorage/save', {
+    fetch('https://localhost:8085/passStorage/save', {
         method: 'post',
         body: JSON.stringify({
             passName: _passname,
@@ -175,7 +175,7 @@ fetch("http://localhost:8085/passStorage/generatePass", requestOptions)
 
 
   function findMyPasses(){
-    fetch('http://localhost:8085/passStorage/myPass', {
+    fetch('https://localhost:8085/passStorage/myPass', {
         method: 'get',
         headers: new Headers({'content-type': 'application/json',
                             'Authorization': 'Bearer ' + sessionStorage.getItem('loginToken'),
@@ -271,7 +271,7 @@ if(response.status === 200){
 function getUser(){
 
     var x = document.getElementById("snackbar");
-    fetch('http://localhost:8085/user/userContext', {
+    fetch('https://localhost:8085/user/userContext', {
         method: 'get',
         headers: new Headers({'content-type': 'application/json',
                             'authorization': 'Bearer ' + sessionStorage.getItem("token"),
@@ -295,7 +295,7 @@ function getUser(){
   function findMyPasses(){
 
     
-    fetch('http://localhost:8085/passStorage/myPass', {
+    fetch('https://localhost:8085/passStorage/myPass', {
         method: 'get',
         headers: new Headers({'content-type': 'application/json',
                             'authorization': 'Bearer ' + sessionStorage.getItem("token"),
@@ -308,6 +308,7 @@ function getUser(){
     let data = await response.json();
     console.log(response.status)
     if(response.status === 200){
+        
         let div = document.getElementById("board")
         for (let i = 0; i < data.length; i++) {
             let h1tag = document.createElement("h1");
@@ -358,7 +359,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("http://localhost:8085/passStorage/decrPass", requestOptions)
+fetch("https://localhost:8085/passStorage/decrPass", requestOptions)
 .then( async response => {
     let data = await response.text();
     console.log(response.status)
@@ -372,3 +373,121 @@ fetch("http://localhost:8085/passStorage/decrPass", requestOptions)
   }
 
 
+
+
+
+
+
+function saveFile(){
+    let x = document.getElementById("snackbar");
+    let fileName = document.getElementById("fileName").value
+    let _file = document.getElementById("file").files[0];
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("token"));
+
+var formdata = new FormData();
+formdata.append("file", _file, fileName);
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: formdata,
+  redirect: 'follow'
+};
+
+fetch("https://localhost:8085/file/saveFile", requestOptions)
+  .then( async (response) => {
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+  })
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+}
+
+
+
+function displayFiles(){
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("token"));
+myHeaders.append("Cookie", "JSESSIONID=6CBC8861BE1965F1A02EA6CD7EC7889B");
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+let filesBoard = document.getElementById("files-board");
+
+fetch("https://localhost:8085/file/findMyFiles", requestOptions)
+  .then(async (response) => {
+    let data = await response.json()
+    if(response.status === 200){
+        
+        let div = document.getElementById("files-board")
+        for (let i = 0; i < data.length; i++) {
+            let h1tag = document.createElement("h1");
+            let atag = document.createElement("a");
+            h1tag.setAttribute("id", data[i]["id"]);
+            atag.setAttribute("onclick", "setFileId("+ data[i]["id"] + ", " + "'" + data[i]["fileName"] + "'" + "), downloadFile()");
+            
+
+
+            
+            div.appendChild(h1tag);
+            div.appendChild(atag);
+            h1tag.appendChild(document.createTextNode(data[i]["fileName"]));
+            atag.appendChild(document.createTextNode("Click here to download this file!"));
+        }
+
+}
+  })
+  .catch(error => console.log('error', error));
+}
+
+function setFileId(fileId, fileName){
+    sessionStorage.setItem("magicnum2", fileId);
+    sessionStorage.setItem("fileName", fileName);
+}
+
+
+
+function downloadFile(){
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("token"));
+
+var raw = "";
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://localhost:8085/file/download/" + sessionStorage.getItem("magicnum2"), requestOptions)
+  .then(async (response) => {
+    let data = await response.text();
+    if(response.status === 200){
+        downloadFileMethod(data, sessionStorage.getItem("fileName"));
+    }
+  })
+  .then(result => console.log(result))
+}
+
+
+function downloadFileMethod(bytes, fileName) {
+    // Create a Blob object from the bytes
+    const blob = new Blob([bytes]);
+  
+    // Create a link with a data URI pointing to the Blob
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+  
+    // Append the link to the DOM and trigger a click event to start the download
+    document.body.appendChild(link);
+    link.click();
+  
+    // Remove the link from the DOM after the download has started
+    document.body.removeChild(link);
+  }

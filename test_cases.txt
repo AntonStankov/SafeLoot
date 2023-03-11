@@ -16,6 +16,7 @@ accounts:
 		- дали със този код имаме успешен login
 		- проверяваме дали с грешен код можем да влезем(неуспещно)
 		- да пробваме различни вариации на грешен код(по малко или повече от 4 цифри, специални символи, специални думи)
+		- ako na 2 otdelni usera im generira edin i siht auth code she ima li problem?
 			
 files:
 	-успешно качване - проверяваме битовата сигнатура
@@ -33,4 +34,13 @@ passwords:
 
 UI:
 	-да се разцъкат всички бутони дали работят
+
+master password: 
+	trqbva da se testva ot html file
+		uspeshno : pokazva ni parolata
+		neuspeshno 
+			-greshna parola na uzera
+			-prazen string i da se proverqva sa specialni simvoli etc.
+
+		
 

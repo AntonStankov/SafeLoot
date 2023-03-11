@@ -3,7 +3,7 @@
 SafeLoot is a password and file manager web application. You can trust SafeLoot to keep your data safe because We use encryption to keep your personal information safe and prevent others from accessing it without permission.
 
 ## Demo
-![Demo](https://github.com/AntonStankov/SafeLoot/blob/main/src/main/resources/static/screenshots_of_the_app/Screenshot_passwords.png?raw=true "Title")
+![Demo](https://github.com/AntonStankov/SafeLoot/blob/main/src/main/resources/static/demo_of_the_app/video_demo.gif?raw=true "Title")
 
 ## Installation
 

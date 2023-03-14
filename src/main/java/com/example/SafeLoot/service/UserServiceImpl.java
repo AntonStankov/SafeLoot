@@ -6,9 +6,6 @@ import com.example.SafeLoot.entity.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 //import javax.mail.Message;
@@ -17,11 +14,9 @@ import org.springframework.stereotype.Service;
 //import javax.mail.internet.InternetAddress;
 //import javax.mail.internet.MimeMessage;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -52,10 +47,10 @@ public class UserServiceImpl implements UserService{
     public boolean checkPassword(String password) throws IOException {
 
 
-        BufferedReader reader = new BufferedReader(new FileReader("rockyou1"));
-        BufferedReader reader2 = new BufferedReader(new FileReader("rockyou2"));
-        BufferedReader reader3 = new BufferedReader(new FileReader("common_passwords"));
-        BufferedReader reader4 = new BufferedReader(new FileReader("top_200_passwords"));
+        BufferedReader reader = new BufferedReader(new FileReader("rockyou1.txt"));
+        BufferedReader reader2 = new BufferedReader(new FileReader("rockyou2.txt"));
+        BufferedReader reader3 = new BufferedReader(new FileReader("common_passwords.txt"));
+        BufferedReader reader4 = new BufferedReader(new FileReader("top_200_passwords.txt"));
 
         String line;
 

@@ -8,7 +8,6 @@ import com.example.SafeLoot.service.passwordStorage.PasswordRepo;
 import com.example.SafeLoot.service.passwordStorage.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

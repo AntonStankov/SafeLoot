@@ -2,14 +2,11 @@ package com.example.SafeLoot.controller.filesController;
 
 
 
-import com.example.SafeLoot.Id;
 import com.example.SafeLoot.entity.FileStorage;
-import com.example.SafeLoot.entity.PasswordStorage;
 import com.example.SafeLoot.entity.User;
 import com.example.SafeLoot.service.UserService;
 import com.example.SafeLoot.service.fileService.FileRepo;
 import com.example.SafeLoot.service.fileService.FileService;
-import jakarta.xml.bind.DatatypeConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
@@ -17,13 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 @RestController

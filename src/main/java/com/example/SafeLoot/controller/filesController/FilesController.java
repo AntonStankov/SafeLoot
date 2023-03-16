@@ -7,13 +7,16 @@ import com.example.SafeLoot.entity.User;
 import com.example.SafeLoot.service.UserService;
 import com.example.SafeLoot.service.fileService.FileRepo;
 import com.example.SafeLoot.service.fileService.FileService;
+import org.apache.http.HttpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -83,17 +86,23 @@ public class FilesController {
         return fileRepo.findAll();
     }
 
-    @GetMapping("/download/{id}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) throws Exception {
-        FileStorage fileBytes = fileRepo.findById(id).orElseThrow(Exception::new);
-        SecretKeySpec keySpec = new SecretKeySpec(hashBytes, "AES");
+    @PostMapping("/download/{id}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id, @RequestBody String password) throws Exception {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        User userContext =  userService.findByEmail(principal.getUsername());
+        System.out.println(password);
+        if (passwordEncoder.matches(password, userContext.getPassword())){
+            FileStorage fileBytes = fileRepo.findById(id).orElseThrow(Exception::new);
+            SecretKeySpec keySpec = new SecretKeySpec(hashBytes, "AES");
 
 
-        Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, keySpec);
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, keySpec);
 
 
-        byte[] decryptedBytes = cipher.doFinal(fileBytes.getFile_content());
+            byte[] decryptedBytes = cipher.doFinal(fileBytes.getFile_content());
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -101,6 +110,9 @@ public class FilesController {
             headers.setContentDisposition(ContentDisposition.attachment().filename(fileBytes.getFileName()).build());
 
             return new ResponseEntity<>(decryptedBytes, headers, HttpStatus.OK);
+        }
+        else throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid master password!");
+
 
     }
 

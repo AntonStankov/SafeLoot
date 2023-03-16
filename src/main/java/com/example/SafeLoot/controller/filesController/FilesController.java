@@ -15,6 +15,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -31,6 +41,16 @@ public class FilesController {
     @Autowired
     private FileService fileService;
 
+    SecureRandom secureRandom = new SecureRandom();
+    byte[] keyBytes = secureRandom.generateSeed(16);
+    String secretKeyString = Base64.getEncoder().encodeToString(keyBytes);
+    MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+    byte[] hashBytes = sha256.digest(secretKeyString.getBytes(StandardCharsets.UTF_8));
+    SecretKeySpec secretKey = new SecretKeySpec(hashBytes, "AES");
+
+    public FilesController() throws NoSuchAlgorithmException {
+    }
+
 
     @PostMapping("/saveFile")
     public FileStorage save(@RequestParam MultipartFile file) throws Exception {
@@ -38,26 +58,24 @@ public class FilesController {
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         User userContext =  userService.findByEmail(principal.getUsername());
 
-//        byte[] fileBytes = Files.readAllBytes(file);
-
         FileStorage fileStorage = new FileStorage();
         fileStorage.setFileName(file.getOriginalFilename());
         fileStorage.setFileType(fileStorage.getFileName().substring(fileStorage.getFileName().lastIndexOf(".") + 1));
         fileStorage.setUser(userContext);
 
-//        byte[] fileBytes = file.getBytes();
-//        PGobject pgObject = new PGobject();
-//        pgObject.setType("bytea");
-//        pgObject.setValue(new String(fileBytes, StandardCharsets.ISO_8859_1));
+        byte[] fileBytes = file.getBytes();
 
-        fileStorage.setFile_content(file.getBytes());
+        SecretKeySpec keySpec = new SecretKeySpec(hashBytes, "AES");
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, keySpec);
 
+        byte[] encryptedBytes = cipher.doFinal(fileBytes);
+        fileStorage.setFile_content(encryptedBytes);
 
         fileStorage.setSize(file.getSize());
         System.out.println(file.getBytes());
 
         return fileService.saveFile(fileStorage);
-        //TODO: display custom message
     }
 
     @GetMapping("/findAll")
@@ -67,29 +85,22 @@ public class FilesController {
 
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) throws Exception {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails principal = (UserDetails) authentication.getPrincipal();
-//        User userContext =  userService.findByEmail(principal.getUsername());
-//
-//
-//        // Load file into a byte array
-//        byte[] fileBytes = loadFileIntoByteArray();
         FileStorage fileBytes = fileRepo.findById(id).orElseThrow(Exception::new);
-//        Boolean passed = Boolean.FALSE;
-//        for (FileStorage fileStorage : userContext.getFiles()){
-//            if (fileStorage.getFile_content() == fileBytes.getFile_content()) {
-//                passed = Boolean.TRUE;
-//                break;
-//            }
-//        }
-//        if (passed){
+        SecretKeySpec keySpec = new SecretKeySpec(hashBytes, "AES");
+
+
+        Cipher cipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.DECRYPT_MODE, keySpec);
+
+
+        byte[] decryptedBytes = cipher.doFinal(fileBytes.getFile_content());
+
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setContentLength(fileBytes.getFile_content().length);
+            headers.setContentLength(decryptedBytes.length);
             headers.setContentDisposition(ContentDisposition.attachment().filename(fileBytes.getFileName()).build());
 
-            return new ResponseEntity<>(fileBytes.getFile_content(), headers, HttpStatus.OK);
-//        }else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This is not your file");
+            return new ResponseEntity<>(decryptedBytes, headers, HttpStatus.OK);
 
     }
 

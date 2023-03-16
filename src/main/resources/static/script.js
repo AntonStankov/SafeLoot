@@ -14,7 +14,7 @@ function register() {
     let _number = document.getElementById("number").value
 
 
-    fetch('https://localhost:8085/user/signup', {
+    fetch('https://192.168.2.110:8085/user/signup', {
         method: 'post',
         body: JSON.stringify({
             email: _email,
@@ -47,7 +47,7 @@ function login(){
     let _email = document.getElementById("email").value
     let _password = document.getElementById("password").value
 
-    fetch('https://localhost:8085/user/login', {
+    fetch('https://192.168.2.110:8085/user/login', {
         method: 'post',
         body: JSON.stringify({
             email: _email,
@@ -76,7 +76,7 @@ function authenticate(){
 
     let _auth = document.getElementById("auth").value
 
-    fetch('https://localhost:8085/user/login-2fa', {
+    fetch('https://192.168.2.110:8085/user/login-2fa', {
         method: 'post',
         body: JSON.stringify({
             otp: _auth,
@@ -108,7 +108,7 @@ function generateAndDisplayPassword() {
 myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("token"));
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("Cookie", "JSESSIONID=64698DE54999A39FAB6B31B611ED8758");
-myHeaders.append("Access-Control-Allow-Origin", "https://localhost:8085");
+myHeaders.append("Access-Control-Allow-Origin", "https://192.168.2.110:8085");
 myHeaders.append('Access-Control-Allow-Methods', 'POST');
 // 'Access-Control-Allow-Origin':'*',
 //                 'Access-Control-Allow-Methods':'POST'
@@ -124,7 +124,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://localhost:8085/passStorage/generatePass", requestOptions)
+fetch("https://192.168.2.110:8085/passStorage/generatePass", requestOptions)
   .then( async response => {
     let data = await response.text();
     console.log(response.status)
@@ -143,7 +143,7 @@ fetch("https://localhost:8085/passStorage/generatePass", requestOptions)
     let _url = document.getElementById("url").value
 
     var x = document.getElementById("snackbar");
-    fetch('https://localhost:8085/passStorage/save', {
+    fetch('https://192.168.2.110:8085/passStorage/save', {
         method: 'post',
         body: JSON.stringify({
             passName: _passname,
@@ -175,7 +175,7 @@ fetch("https://localhost:8085/passStorage/generatePass", requestOptions)
 
 
   function findMyPasses(){
-    fetch('https://localhost:8085/passStorage/myPass', {
+    fetch('https://192.168.2.110:8085/passStorage/myPass', {
         method: 'get',
         headers: new Headers({'content-type': 'application/json',
                             'Authorization': 'Bearer ' + sessionStorage.getItem('loginToken'),
@@ -271,7 +271,7 @@ if(response.status === 200){
 function getUser(){
 
     var x = document.getElementById("snackbar");
-    fetch('https://localhost:8085/user/userContext', {
+    fetch('https://192.168.2.110:8085/user/userContext', {
         method: 'get',
         headers: new Headers({'content-type': 'application/json',
                             'authorization': 'Bearer ' + sessionStorage.getItem("token"),
@@ -295,7 +295,7 @@ function getUser(){
   function findMyPasses(){
 
     
-    fetch('https://localhost:8085/passStorage/myPass', {
+    fetch('https://192.168.2.110:8085/passStorage/myPass', {
         method: 'get',
         headers: new Headers({'content-type': 'application/json',
                             'authorization': 'Bearer ' + sessionStorage.getItem("token"),
@@ -312,6 +312,7 @@ function getUser(){
         let div = document.getElementById("board")
         for (let i = 0; i < data.length; i++) {
             let h1tag = document.createElement("h1");
+            let info = document.createElement("a")
             let button = document.createElement("a");
 
             
@@ -321,14 +322,17 @@ function getUser(){
             console.log(idd)
             h1tag.setAttribute("id", data[i]["id"]);
             button.setAttribute("onclick", "sessionSave(" + idd + ")");
-            
             button.setAttribute("href", "masterpass.html");
             button.appendChild(document.createTextNode("Click here to see your password"));
+            info.setAttribute("onclick", "sessionSaveInfo(" + idd + ")")
+            info.setAttribute("href", "passInfo.html")
 
 
             
             div.appendChild(h1tag);
+            div.appendChild(info);
             div.appendChild(button);
+            info.appendChild(document.createTextNode("Click here to see password usage info"));
             h1tag.appendChild(document.createTextNode(data[i]["passwordName"] + ": *********   /   " + data[i]["url"]))
         }
 
@@ -339,6 +343,11 @@ function getUser(){
   function sessionSave(_id){
     sessionStorage.setItem("magicnum", _id);
   }
+
+  function sessionSaveInfo(_id){
+    sessionStorage.setItem("info", _id);
+  }
+    
 
   function showPass(_id){
     let pass = document.getElementById("master").value;
@@ -359,7 +368,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://localhost:8085/passStorage/decrPass", requestOptions)
+fetch("https://192.168.2.110:8085/passStorage/decrPass", requestOptions)
 .then( async response => {
     let data = await response.text();
     console.log(response.status)
@@ -370,6 +379,43 @@ fetch("https://localhost:8085/passStorage/decrPass", requestOptions)
   })
 //   .catch(error => console.log('error', error));
 
+  }
+
+  function showInfo(){
+    let pass = document.getElementById("master").value;
+    var myHeaders = new Headers();
+myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("token"));
+myHeaders.append("Content-Type", "application/json");
+myHeaders.append("Cookie", "JSESSIONID=6CBC8861BE1965F1A02EA6CD7EC7889B");
+
+var raw = JSON.stringify({
+  "id": sessionStorage.getItem("info"),
+  "userPassword": pass
+});
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  redirect: 'follow'
+};
+
+fetch("https://192.168.2.110:8085/passStorage/showInfo", requestOptions)
+.then( async response => {
+    let data = await response.json();
+    console.log(response.status)
+    if(response.status === 200){
+      let dashboard = document.getElementById("dashboard");
+      for (let i = 0; i < data.length; i++) {
+        let info = document.createElement("p");
+
+        dashboard.appendChild(info);
+        info.appendChild(document.createTextNode(data[i]["usageDate"] + "  |  " + data[i]["ips"]));
+        sessionStorage.setItem("info", null);
+      }
+        
+    }
+  })
   }
 
 
@@ -395,7 +441,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://localhost:8085/file/saveFile", requestOptions)
+fetch("https://192.168.2.110:8085/file/saveFile", requestOptions)
   .then( async (response) => {
     x.className = "show";
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
@@ -419,7 +465,7 @@ var requestOptions = {
 
 let filesBoard = document.getElementById("files-board");
 
-fetch("https://localhost:8085/file/findMyFiles", requestOptions)
+fetch("https://192.168.2.110:8085/file/findMyFiles", requestOptions)
   .then(async (response) => {
     let data = await response.json()
     if(response.status === 200){
@@ -464,7 +510,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://localhost:8085/file/download/" + sessionStorage.getItem("magicnum2"), requestOptions)
+fetch("https://192.168.2.110:8085/file/download/" + sessionStorage.getItem("magicnum2"), requestOptions)
   .then(async (response) => {
     let data = await response.text();
     if(response.status === 200){

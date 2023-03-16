@@ -1,6 +1,7 @@
 package com.example.SafeLoot.entity.helpClasses;
 
 import com.example.SafeLoot.entity.PasswordStorage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Usage {
     @Column
     private Date usageDate;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private PasswordStorage passwordStorage;
 }

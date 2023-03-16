@@ -10,6 +10,7 @@ import com.example.SafeLoot.service.passwordStorage.PasswordService;
 import com.example.SafeLoot.service.passwordStorage.UsageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -89,6 +90,21 @@ public class PasswordController {
     @PostMapping("/generatePass")
     public String generatePass(@RequestBody Length length){
         return passwordService.generatePassword(length.getLength());
+    }
+
+
+    @PostMapping("/showInfo")
+    public List<Usage> getUsage(@RequestBody DecrPassRequest passRequest) throws Exception {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails principal = (UserDetails) authentication.getPrincipal();
+        User userContext =  userService.findByEmail(principal.getUsername());
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if(passwordEncoder.matches(passRequest.getUserPassword(), userContext.getPassword())){
+            PasswordStorage passwordStorage = passwordRepo.findById(passRequest.getId()).orElseThrow(Exception::new);
+            return passwordStorage.getUsage();
+        }
+        else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong password!");
     }
 
 }

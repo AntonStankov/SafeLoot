@@ -1,4 +1,6 @@
 **/target/*
 target/*
+target/classes/application.properties
 resourses/application.properties
 src/main/resources/application.properties
+*.properties

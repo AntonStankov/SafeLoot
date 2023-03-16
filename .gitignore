@@ -1,4 +1,6 @@
-**/target/*
+
+resourses/springboot.p12
+**target/*
 target/*
 target/classes/application.properties
 resourses/application.properties

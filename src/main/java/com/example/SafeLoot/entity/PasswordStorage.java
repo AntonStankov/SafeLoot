@@ -3,7 +3,6 @@ package com.example.SafeLoot.entity;
 import com.example.SafeLoot.entity.helpClasses.Usage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import kotlin.jvm.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

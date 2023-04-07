@@ -87,13 +87,11 @@ public class FilesController {
     }
 
     @PostMapping("/download/{id}")
-    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id, @RequestBody String password) throws Exception {
+    public ResponseEntity<byte[]> downloadFile(@PathVariable Long id) throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails principal = (UserDetails) authentication.getPrincipal();
         User userContext =  userService.findByEmail(principal.getUsername());
-        System.out.println(password);
-        if (passwordEncoder.matches(password, userContext.getPassword())){
             FileStorage fileBytes = fileRepo.findById(id).orElseThrow(Exception::new);
             SecretKeySpec keySpec = new SecretKeySpec(hashBytes, "AES");
 
@@ -110,8 +108,6 @@ public class FilesController {
             headers.setContentDisposition(ContentDisposition.attachment().filename(fileBytes.getFileName()).build());
 
             return new ResponseEntity<>(decryptedBytes, headers, HttpStatus.OK);
-        }
-        else throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid master password!");
 
 
     }

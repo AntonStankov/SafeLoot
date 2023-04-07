@@ -39,7 +39,7 @@ public class SignUpController {
         user.setIsBanned(Boolean.FALSE);
         user.setOtp(0);
         List<Role> roles = new ArrayList<>();
-        roles.add(roleRepo.findByRoleName(Roles.USER).get(0));
+//        roles.add(roleRepo.findByRoleName(Roles.USER).get(0));
         user.setRoles(roles);
         userRepo.save(user);
         return user;

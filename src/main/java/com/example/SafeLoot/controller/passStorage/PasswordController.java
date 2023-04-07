@@ -8,6 +8,7 @@ import com.example.SafeLoot.service.UserService;
 import com.example.SafeLoot.service.passwordStorage.PasswordRepo;
 import com.example.SafeLoot.service.passwordStorage.PasswordService;
 import com.example.SafeLoot.service.passwordStorage.UsageRepo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -17,9 +18,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +56,7 @@ public class PasswordController {
     }
 
     @PostMapping("/decrPass")
-    public String decrPass(@RequestBody DecrPassRequest passwordRequest) throws Exception {//TODO: can not accept Long in RequestBody
+    public String decrPass(@RequestBody DecrPassRequest passwordRequest, HttpServletRequest request) throws Exception {//TODO: can not accept Long in RequestBody
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails principal = (UserDetails) authentication.getPrincipal();
@@ -62,7 +67,18 @@ public class PasswordController {
             List<Usage> usages = passwordStorage.getUsage();
             Usage usage = new Usage();
             usage.setUsageDate(new Date());
-            usage.setIps(InetAddress.getLocalHost().getHostAddress());
+
+//            String ipAddress = request.getHeader("X-Forwarded-For");
+//            if (ipAddress == null) {
+//                ipAddress = request.getRemoteAddr();
+//            }
+
+            RestTemplate restTemplate = new RestTemplate();
+            String url = "https://api.ipify.org";
+            String publicIp = restTemplate.getForObject(url, String.class);
+
+
+            usage.setIps(publicIp);
             usage.setPasswordStorage(passwordStorage);
             usageRepo.save(usage);
 

@@ -2,13 +2,40 @@
     <head>
         <title>Password Info</title>
         <script src="../script.js"></script>
+        <link rel="stylesheet" href="css.css">
+        <link rel="icon" type="image/x-icon" href="images/icon.ico" />
     </head>
 
     <body>
-        <input type="password" id="master">
-        <button onclick="showInfo()">Submit</button>
+        <div class="app"">
+        <header class="app-header">
+            <div class="app-header-logo">
+              <div class="logo">
+                <span class="logo-icon">
+                  <img src="images/icon.png">
+                </span>
+                <h1 class="logo-title">
+                  <span>Safe</span>
+                  <span>Loot</span>
+                </h1>
+                
+              </div>
+            </div>
+            <h1 class="jol">Dashboard</h1> 
+        </header>
+        <div class="app-body">
+            <nav class="navigation">
+            </nav>
+            <div class="app-body-main-content">
+              <input type="email" placeholder="masterpassword" id="master">
+              <button class="send" onclick="showInfo()">Enter</button>
+             
+            </div>
+              </div>   
+        </div>
 
-        <div id="dashboard">
+
+        <div id="dashboard" class="info">
 
         </div>
     </body>
